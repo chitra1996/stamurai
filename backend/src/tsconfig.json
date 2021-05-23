@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "outDir": "dist",
+        "sourceMap": true,
+        "moduleResolution": "node",
+        "declaration": true,
+        "experimentalDecorators": true,
+        "rootDirs": ["."],
+        "baseUrl": ".",
+        "emitDecoratorMetadata": true,
+        "resolveJsonModule": true
+    },
+    "include": ["./**/*.ts", "./serviceAccountKey.json"],
+    "exclude": ["node_modules", "dist"]
+}
