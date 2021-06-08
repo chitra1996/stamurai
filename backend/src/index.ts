@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 server = app.listen(PORT, async () => {
     await dbConnect();
     // Uncomment the below function to create the first admin user
-    await createFirstUser();
+    // await createFirstUser();
     console.log(`started listening on port ${PORT}`);
     return server;
 });

@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Login from './screens/login';
+import MainScreen from "./screens"
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Login />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <MainScreen />
+    </React.StrictMode>,
+    document.getElementById('root')
 );

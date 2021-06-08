@@ -41,7 +41,7 @@ export const fetchTaskDAL = async (payload: any): Promise<ITaskDTO[]> => {
 
 export const fetchAllTasksDAL = async (): Promise<ITaskDTO[]> => {
     try {
-        const task: ITaskDTO[] = await Task.find();
+        const task: ITaskDTO[] = await Task.find().sort({ "createdAt": "desc" });
         return task;
     } catch (error) {
         return Promise.reject(error);

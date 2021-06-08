@@ -1,38 +1,12 @@
 import React from "react";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import LoginHeader from "../components/loginHeader"
+// import ToastContainer from 'react-bootstrap/lib/ToastContainer'
+import Toast from 'react-bootstrap/Toast';
+import LoginHeader from "../../components/loginHeader"
+import { withRouter } from 'react-router-dom'
 
 const base_url = "http://0.0.0.0:8080";
-
-const firstDiv = { 
-    display: "flex", 
-    flexDirection: "column", 
-    flex: 1, 
-    height: "100vh", 
-    backgroundColor: "whitesmoke" 
-}
-
-const secondDiv = {
-    display: "flex", 
-    flexDirection: "row", 
-    flex: 1, 
-    backgroundColor: "whitesmoke" 
-}
-
-const thirdDiv = { 
-    flex: 1, 
-    display: "flex", 
-    justifyContent: "center", 
-    alignItems: "center" 
-}
-
-const loginForm = {
-    width: "25%",
-    backgroundColor: "white",
-    borderRadius: "3pt",
-    padding: "10pt"
-}
 
 class Login extends React.Component {
     constructor(props) {
@@ -40,7 +14,15 @@ class Login extends React.Component {
         this.state = {
             loginPayload: {},
             isError: false,
-            error: ""
+            error: "",
+            showToast: false
+        }
+    }
+
+    componentDidMount () {
+        const token = localStorage.getItem("authToken");
+        if(token) {
+            this.goToNextScreen();
         }
     }
 
@@ -61,7 +43,9 @@ class Login extends React.Component {
                             error: result.message
                         });
                     } else {
-                        console.log("login successful");
+                        console.log("login successful", result);
+                        localStorage.setItem("authToken", result.authToken);
+                        this.goToNextScreen();
                     }
                 },
                 (error) => {
@@ -69,10 +53,30 @@ class Login extends React.Component {
                 })
     }
 
+    showToast = () => {
+        return (
+            <div style={{ position: "absolute", top: 20, right: 20 }}>
+                <Toast autohide={true} show={this.state.isError} onClose={() => {
+                    this.setState({
+                        isError: false
+                    })
+                }}>
+                    <Toast.Body>{this.state.error}</Toast.Body>
+                </Toast>
+            </div>
+        )
+    }
+
+    goToNextScreen = () => {
+        this.props.history.push('/tasks', []);
+    }
+
     render() {
+        const { location } = this.props;
+        console.log(location.state);
         return (
             <div style={firstDiv}>
-                <TollHeader />
+                {this.showToast()}
                 <div style={secondDiv} >
                     <div style={thirdDiv}>
                         <Form style={loginForm}>
@@ -108,7 +112,7 @@ class Login extends React.Component {
 
                             <Button variant="primary" onClick={() => { this.login(this.state.loginPayload) }}>
                                 Login
-                        </Button>
+                            </Button>
                         </Form>
                     </div>
                 </div>
@@ -117,4 +121,34 @@ class Login extends React.Component {
     }
 }
 
-export default Login
+const firstDiv = {
+    display: "flex",
+    flexDirection: "column",
+    flex: 1,
+    backgroundColor: "whitesmoke"
+}
+
+const secondDiv = {
+    display: "flex",
+    flexDirection: "row",
+    flex: 1,
+    backgroundColor: "whitesmoke"
+}
+
+const thirdDiv = {
+    flex: 1,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+}
+
+const loginForm = {
+    width: "25%",
+    backgroundColor: "white",
+    borderRadius: "3pt",
+    padding: "10pt"
+}
+
+
+export default withRouter(Login)
+

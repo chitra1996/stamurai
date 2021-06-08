@@ -72,6 +72,7 @@ export const fetchAllTasks = async (
     try {
         const task: ITaskDTO[] = await fetchAllTasksDAL();
         let finalResult = [];
+        let resultPromise = [];
         if (task && task.length > 0) {
             task.forEach((task) => {
                 finalResult.push(buildTaskResponse(task));
