@@ -31,6 +31,7 @@ class TaskList extends React.Component {
                         if (result.error) {
                             console.log(result);
                         } else {
+                            // console.log(JSON.stringify(result));
                             this.setState({
                                 tasks: result
                             })
@@ -53,7 +54,7 @@ class TaskList extends React.Component {
                 <div style={
                     {
                         ...firstDiv,
-                        height: "100vh"
+                        height: "100%"
                     }
                 }>
                     <div style={

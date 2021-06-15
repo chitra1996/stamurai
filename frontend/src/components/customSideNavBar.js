@@ -1,7 +1,7 @@
 import React from "react";
 import DP from "../assets/images/DP.png";
 import {
-    columnFlex, listStyle, centerAlign,
+    columnFlex, listStyle as tempListStyle, centerAlign,
     cicularImage, centerUlStyle
 } from "../assets/css/common";
 import {
@@ -9,12 +9,35 @@ import {
 } from "react-router-dom";
 import { withRouter } from 'react-router-dom'
 
-class CustomNavBar extends React.Component {
+let listStyle = {
+    ...tempListStyle,
+    justifyContent: "center",
+    flex: 1
+}
+
+let activeListStyle = {
+    ...listStyle,
+    borderRight: "3px solid #ed3833"
+}
+
+class customSideNavBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            screen: ""
+            clickedLink: "taskList"
         }
+    }
+
+    updateLinkStyle = (listName, cb) => {
+        this.setState({
+            clickedLink: listName
+        }, () => {
+            cb(listName);
+        });
+    }
+
+    getListStyle = (listName) => {
+        return this.state.clickedLink != listName ? listStyle : activeListStyle
     }
 
     render() {
@@ -30,18 +53,22 @@ class CustomNavBar extends React.Component {
                     alt="image"
                     style={cicularImage}
                 />
-                <div style={{
-                    margin: "10px 0 0 0"
-                }}>
-                    Hello Chitra
-                </div>
 
                 <nav style={{ width: "100%" }}>
                     <ul style={centerUlStyle}>
 
+                        
+                        <Link to="/">
+                            <li style={this.getListStyle("taskList")}  onClick={() => {
+                                this.updateLinkStyle("taskList", updateScreen)
+                            }}>
+                                Show Tasks
+                            </li>
+                        </Link>
+                        
                         <Link to="/screen1">
-                            <li style={listStyle} onClick={() => {
-                                updateScreen("screenOne")
+                            <li style={this.getListStyle("screenOne")} onClick={() => {
+                                this.updateLinkStyle("screenOne", updateScreen)
                             }}>
                                 screen one
                             </li>
@@ -49,34 +76,18 @@ class CustomNavBar extends React.Component {
 
 
                         <Link to="/screen2">
-                            <li style={listStyle} onClick={() => {
-                                updateScreen("screenTwo")
+                            <li style={this.getListStyle("screenTwo")} onClick={() => {
+                                this.updateLinkStyle("screenTwo", updateScreen)
                             }}>
                                 screen two
                             </li>
                         </Link>
 
                         <Link to="/screen3">
-                            <li style={listStyle} onClick={() => {
-                                updateScreen("screenThree")
+                            <li style={this.getListStyle("screenThree")} onClick={() => {
+                                this.updateLinkStyle("screenThree", updateScreen)
                             }}>
                                 screen three
-                            </li>
-                        </Link>
-                        
-                        <Link to="/">
-                            <li style={listStyle} onClick={() => {
-                                updateScreen("taskList")
-                            }}>
-                                Show Tasks
-                            </li>
-                        </Link>
-                        
-                        <Link to="/">
-                            <li style={listStyle} onClick={() => {
-                                updateScreen("taskList")
-                            }}>
-                                Show Tasks
                             </li>
                         </Link>
                     </ul>
@@ -108,4 +119,4 @@ class CustomNavBar extends React.Component {
     }
 }
 
-export default withRouter(CustomNavBar);
+export default withRouter(customSideNavBar);

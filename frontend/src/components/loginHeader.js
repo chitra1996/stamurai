@@ -12,7 +12,7 @@ const headerStyle = {
 class LoginHeader extends React.Component {
     render() {
         return (
-            <div style={{ width: "100%", height: "10%" }}>
+            <div style={{ width: "100%", height: "10vh" }}>
                 <div style={headerStyle}>
                     <h3 style={{ color: "#ffffff" }}>TASK MANAGEMENT SYSTEM</h3>
                 </div>

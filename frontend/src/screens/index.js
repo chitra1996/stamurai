@@ -6,18 +6,19 @@ import {
     Switch,
     Route
 } from "react-router-dom";
-import CustomNavBar from "../components/customNavBar";
+import CustomSideNavBar from "../components/customSideNavBar";
 import LoginHeader from "../components/loginHeader";
 import { columnFlex, rowFlex } from "../assets/css/common";
 import ScreenOne from "../components/screenOne";
 import ScreenTwo from "../components/screenTwo";
 import ScreenThree from "../components/screenThree";
+import CustomTopNavBar from "../components/customTopNavBar";
 
 class MainScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            screen: "screenOne"
+            screen: "taskList"
         }
     }
 
@@ -34,7 +35,7 @@ class MainScreen extends React.Component {
         return (
             <div style={{ ...columnFlex, flex: 1, height: "100vh" }}>
                 <LoginHeader />
-                <div style={{ ...rowFlex, flex: 1 }}>
+                <div style={{ ...rowFlex, flex: 1, height: "90vh" }}>
                     <Router>
                         <Switch>
                             <Route path="/login">
@@ -42,15 +43,23 @@ class MainScreen extends React.Component {
                             </Route>
                             <Route path="/">
                                 <div style={{ ...columnFlex, flex: 2 }}>
-                                    <CustomNavBar screen={screen} updateScreen={(screen) => {
+                                    <CustomSideNavBar updateScreen={(screen) => {
                                         this.setState({
                                             screen: screen
                                         })
                                     }} />
                                 </div>
                                 <div style={{ ...columnFlex, flex: 8 }}>
-                                    {/* <TaskList /> */}
-                                    {data}
+                                    <div style={{ ...columnFlex, flex: 2 }}>
+                                        <CustomTopNavBar updateScreen={(screen) => {
+                                            this.setState({
+                                                screen: screen
+                                            })
+                                        }} />
+                                    </div>
+                                    <div style={{ ...columnFlex, flex: 8 }}>
+                                        {data}
+                                    </div>
                                 </div>
                             </Route>
                         </Switch>
